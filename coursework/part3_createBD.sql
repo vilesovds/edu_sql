@@ -149,13 +149,28 @@ CREATE TABLE `groups` (
   `name` varchar(45) NOT NULL,
   `avatar_media_id` int unsigned NOT NULL,
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `forums_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`),
   KEY `fk_groups_media1_idx` (`avatar_media_id`),
-  KEY `fk_groups_forums1_idx` (`forums_id`),
-  CONSTRAINT `fk_groups_forums1` FOREIGN KEY (`forums_id`) REFERENCES `forums` (`id`),
   CONSTRAINT `fk_groups_media1` FOREIGN KEY (`avatar_media_id`) REFERENCES `media` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `groups_forums`
+--
+
+DROP TABLE IF EXISTS `groups_forums`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `groups_forums` (
+  `forums_id` int unsigned NOT NULL,
+  `groups_id` int unsigned NOT NULL,
+  PRIMARY KEY (`forums_id`,`groups_id`),
+  KEY `fk_groups_forums_forums1_idx` (`forums_id`),
+  KEY `fk_groups_forums_groups1_idx` (`groups_id`),
+  CONSTRAINT `fk_groups_forums_forums1` FOREIGN KEY (`forums_id`) REFERENCES `forums` (`id`),
+  CONSTRAINT `fk_groups_forums_groups1` FOREIGN KEY (`groups_id`) REFERENCES `groups` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -259,7 +274,7 @@ CREATE TABLE `profiles` (
   KEY `fk_profiles_media2_idx` (`avatar_photo_id`),
   CONSTRAINT `fk_profiles_media1` FOREIGN KEY (`cover_photo_id`) REFERENCES `media` (`id`),
   CONSTRAINT `fk_profiles_media2` FOREIGN KEY (`avatar_photo_id`) REFERENCES `media` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -426,4 +441,4 @@ CREATE TABLE `users_groups` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-06 12:22:18
+-- Dump completed on 2021-03-06 13:07:32
